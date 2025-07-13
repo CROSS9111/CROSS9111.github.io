@@ -3,6 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面談前ブリーフィング</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #4A5FCC;
+            color: white;
+            padding: 20px 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #4A5FCC;
+            border-bottom-color: #4A5FCC;
+        }
+
+        .tab:hover {
+            color: #4A5FCC;
+        }
+
+        .upload-section {
+            margin-bottom: 40px;
+        }
+
+        .upload-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .upload-icon {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #4A5FCC;
+            background-color: #f0f2ff;
+        }
+
+        .upload-icon-large {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 20px;
+            color: #6c757d;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .manual-input {
+            margin-bottom: 30px;
+        }
+
+        .manual-input h3 {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .input-label-icon {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4A5FCC;
+            box-shadow: 0 0 0 3px rgba(74, 95, 204, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: #9ca3af;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-cancel {
+            background-color: white;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-cancel:hover {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .btn-submit {
+            background-color: #4A5FCC;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: #3b4ba3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            面談前ブリーフィング
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('form')">条件入力フォーム</div>
+                <div class="tab" onclick="switchTab('ai')">AI自動生成結果</div>
+            </div>
+
+            <div id="form-content">
+                <div class="upload-section">
+                    <div class="upload-label">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        TSRアップロード
+                    </div>
+                    
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon-large">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text">ファイルを選択またはドラッグ&ドロップ</div>
+                        <div class="upload-subtext">PDF, DOC, DOCX, TXT（最大10MB）</div>
+                    </div>
+                    
+                    <input type="file" id="fileInput" class="file-input" accept=".pdf,.doc,.docx,.txt" onchange="handleFileUpload(event)">
+                </div>
+
+                <div class="manual-input">
+                    <h3>手動入力の場合</h3>
+                    
+                    <div class="input-group">
+                        <div class="input-label">
+                            <svg class="input-label-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                            </svg>
+                            法人番号
+                        </div>
+                        <input type="text" class="input-field" placeholder="xxx（法人番号）" maxlength="13">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-cancel">キャンセル</button>
+                    <button class="btn btn-submit">送信</button>
+                </div>
+            </div>
+
+            <div id="ai-content" class="hidden">
+                <p style="text-align: center; color: #6c757d; margin-top: 60px;">AI自動生成結果がここに表示されます</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            if (tab === 'form') {
+                document.querySelector('.tab:first-child').classList.add('active');
+                document.getElementById('form-content').classList.remove('hidden');
+                document.getElementById('ai-content').classList.add('hidden');
+            } else {
+                document.querySelector('.tab:last-child').classList.add('active');
+                document.getElementById('form-content').classList.add('hidden');
+                document.getElementById('ai-content').classList.remove('hidden');
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const uploadArea = document.querySelector('.upload-area');
+                uploadArea.innerHTML = `
+                    <div class="upload-icon-large">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4A5FCC" stroke-width="1.5">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                    </div>
+                    <div class="upload-text" style="color: #4A5FCC;">ファイルがアップロードされました</div>
+                    <div class="upload-subtext">${file.name}</div>
+                `;
+                uploadArea.style.borderColor = '#4A5FCC';
+                uploadArea.style.backgroundColor = '#f0f2ff';
+            }
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#4A5FCC';
+            uploadArea.style.backgroundColor = '#f0f2ff';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#dee2e6';
+            uploadArea.style.backgroundColor = '#f8f9fa';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById('fileInput').files = files;
+                handleFileUpload({ target: { files: files } });
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Code導入LTピッチ</title>
     <style>
         * {
@@ -500,3 +829,4 @@
     </script>
 </body>
 </html>
+ -->
